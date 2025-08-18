@@ -10,6 +10,7 @@
 @import "css/theme.css";
 @import "css/comments.css";
 @import "css/accordion.css";
+@import "css/scroller.css";
 
 /* Make the links black */
 :root {

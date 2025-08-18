@@ -1,0 +1,52 @@
+{{ set items = (typeof items !== "undefined" ? items : (typeof slides !== "undefined" ? slides : [])) }}
+<!-- seconds per loop -->
+{{ set speed = (typeof speed !== "undefined" ? speed : 30) }}
+<!-- px gap between items -->
+{{ set gap = (typeof gap !== "undefined" ? gap : 24) }}         
+<!-- px fixed item height -->
+{{ set height = (typeof height !== "undefined" ? height : 320) }}
+<!-- "left" | "right" -->
+{{ set direction = (typeof direction !== "undefined" ? direction : "left") }} 
+{{ set overlay = (typeof overlay !== "undefined" ? overlay : "undefined") }} 
+
+{{ if items && items.length }}
+
+{{ if overlay !== "undefined" }}
+  <div class="absolute inset-0 z-20 grid place-items-center pointer-events-none">
+    <h2 class="font-brand text-heart text-5xl md:text-6xl lg:text-8xl px-4 drop-shadow-sm">{{ overlay }}</h2>
+  </div>
+{{ /if }}
+
+<section class="scroller relative overflow-hidden"
+  style="--gap: {{ gap }}px; --duration: {{ speed }}s; --item-h: {{ height }}px; --direction: {{ direction == 'right' ? 'reverse' : 'normal' }};"
+>
+  <!-- Fade edges (optional; requires mask support). Remove if you don't want it. -->
+  <div class="pointer-events-none absolute inset-0 scroller-mask"></div>
+
+  <div class="scroller__inner">
+    <!-- Track A (screen readers read this one) -->
+    <ul class="scroller__track">
+      {{ for s of items }}
+      <li class="scroller__item">
+        {{ if s.href }}<a href="{{ s.href }}" class="block focus:outline-none focus:ring">{{ /if }}
+          <img src="{{ s.image ?? s.src }}" alt="{{ s.alt ?? '' }}" loading="lazy" decoding="async"
+               class="grayscale-80 block h-[var(--item-h)] w-auto object-cover">
+        {{ if s.href }}</a>{{ /if }}
+      </li>
+      {{ /for }}
+    </ul>
+
+    <!-- Track B (duplicate for seamless loop, hidden to AT) -->
+    <ul class="scroller__track" aria-hidden="true">
+      {{ for s of items }}
+      <li class="scroller__item">
+        {{ if s.href }}<a href="{{ s.href }}" class="block">{{ /if }}
+          <img src="{{ s.image ?? s.src }}" alt="" loading="lazy" decoding="async"
+               class="grayscale-80 block h-[var(--item-h)] w-auto object-cover" />
+        {{ if s.href }}</a>{{ /if }}
+      </li>
+      {{ /for }}
+    </ul>
+  </div>
+</section>
+{{ /if }}
