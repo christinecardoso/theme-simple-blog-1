@@ -2,10 +2,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
-
-
 @theme {
   /* Fonts */
 /*  --font-sans: -apple-system, BlinkMacSystemFont, "avenir next", avenir, "segoe ui",
@@ -51,18 +47,6 @@
   --accent-dark: var(--color-accent-dark);
   --border-accent-light: var(--color-accent-dark);
   --header: var(--color-accent);
-}
-
-.cedarville-cursive-regular {
-  font-family: "Cedarville Cursive", cursive;
-  font-weight: 400;
-  font-style: normal;
-  > * {
-    font-family: "Cedarville Cursive", cursive;
-  font-weight: 400;
-  font-style: normal;
-  
-  }
 }
 
 @layer components {

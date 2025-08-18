@@ -84,27 +84,35 @@ export default function (userOptions?: Options) {
         },
       }))
       .use(googleFonts({
-        fonts: [
+        cssFile: "/styles.css",
+        subsets: [
+          "latin",
+          "latin-ext",
+        ],
+        fonts: {
           // Your original pairing
-          "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900",
-          "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900",
+          "Playfair Display": "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900",
+          "Roboto": "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900",
 
           // Pair 1: Inter + Cormorant Garamond (modern + romantic)
-          "https://fonts.googleapis.com/css2?family=Inter:wght@100..900",
-          "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700",
+          "Inter": "https://fonts.googleapis.com/css2?family=Inter:wght@100..900",
+          "Cormorant Garamond":"https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700",
 
           // Pair 2: IBM Plex Sans + Libre Baskerville (clean + readable)
-          "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700",
-          "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400",
+          "IBM Plex Sans": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700",
+          "Libre Baskerville": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400",
 
           // Pair 3: Space Grotesk + Crimson Pro (bold + soft classic)
-          "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700",
-          "https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900",
+          "Space Grotesk": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700",
+          "Crimson Pro": "https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900",
 
           // Pair 4: Work Sans + Lora (geometric + warm)
-          "https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900",
-          "https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700"
-        ],
+          "Work Sans": "https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900",
+          "Lora":"https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700",
+          
+          // Wedding Brand inspired by https://www.ellaandmax.com/ 
+          "Beth Ellen":"https://fonts.googleapis.com/css2?family=Beth+Ellen:wght@400"
+        },
       }))
       .use(postcss())
       .use(basePath())
