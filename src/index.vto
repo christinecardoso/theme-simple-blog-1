@@ -25,6 +25,16 @@ templateEngine: [vto]
       {{ if post.testimonials }}
         {{ include "templates/testimonial-grid.vto" { testimonials: post.testimonials } }}
       {{ /if }}
+      {{ if post.scroller }}
+        {{ include "templates/image-scroller.vto" {
+          items: post.scroller,
+          speed: Number(post.ticker?.speed ?? 30),
+          gap: Number(post.ticker?.gap ?? 24),
+          height: Number(post.ticker?.height ?? 260),
+          direction: post.ticker?.direction ?? "left",
+          overlay: post.ticker?.overlay ?? ""
+         } }}
+      {{ /if }}
     </div>
   </div>
 {{ /for }}
