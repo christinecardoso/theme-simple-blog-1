@@ -1,3 +1,17 @@
+/* use nav-mt-transition nav-mt-12 */
+.nav-mt-transition {
+  transition: margin-top 150ms ease-in-out;
+  
+  &.initial,
+  &.sticky {
+    margin-top: var(--nav-mt, theme(spacing.8));
+  }
+
+  &.sticky.scroll {
+    margin-top: 0;
+  }
+}
+
 nav.navbarTop {
   @apply w-full px-4 md:px-[4%] py-9 sticky md:sticky top-0 z-50 text-sm;
   backdrop-filter: blur(5px);

@@ -55,3 +55,12 @@
   }
 }
 
+@layer utilities {
+  .nav-mt-0      { --nav-mt: theme(spacing.0); }
+  .nav-mt-4      { --nav-mt: theme(spacing.4); }
+  .nav-mt-6      { --nav-mt: theme(spacing.6); }
+  .nav-mt-8      { --nav-mt: theme(spacing.8); }
+  .nav-mt-12     { --nav-mt: theme(spacing.12); }
+  /* add any others you need */
+}
+
