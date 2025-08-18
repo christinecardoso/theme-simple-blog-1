@@ -1,6 +1,8 @@
 /* Lume's design system */
 /*@import "https://unpkg.com/@lumeland/ds@0.5.2/ds.css";*/
 
+/* google-fonts */
+
 /* Custom components */
 @import "css/tailwind.css";
 @import "css/navbar.css";
