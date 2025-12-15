@@ -1,0 +1,7 @@
+# _data.yml
+transformImages:
+  - resize: [300, 300]
+    suffix: -small
+    format: [jpg]
+  - resize: [600, 600]
+    format: webp
