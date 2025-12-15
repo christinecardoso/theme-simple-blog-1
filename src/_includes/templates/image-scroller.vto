@@ -1,52 +1,76 @@
-{{ set items = (typeof items !== "undefined" ? items : (typeof slides !== "undefined" ? slides : [])) }}
-<!-- seconds per loop -->
-{{ set speed = (typeof speed !== "undefined" ? speed : 30) }}
-<!-- px gap between items -->
-{{ set gap = (typeof gap !== "undefined" ? gap : 24) }}         
-<!-- px fixed item height -->
-{{ set height = (typeof height !== "undefined" ? height : 320) }}
-<!-- "left" | "right" -->
-{{ set direction = (typeof direction !== "undefined" ? direction : "left") }} 
-{{ set overlay = (typeof overlay !== "undefined" ? overlay : "undefined") }} 
+{{ set list = [] }}
+{{ if typeof items !== "undefined" && items && items.length }}
+  {{ set list = items }}
+{{ else if typeof slides !== "undefined" && slides && slides.length }}
+  {{ set list = slides }}
+{{ /if }}
 
-{{ if items && items.length }}
+{{ set direction = (typeof direction === "string" ? direction : "left") }}
+{{ set cssDirection = (direction === "right" ? "reverse" : "normal") }}
 
-{{ if overlay !== "undefined" }}
+{{ if list && list.length }}
+
+  {{ if overlay }}
   <div class="absolute inset-0 z-20 grid place-items-center pointer-events-none">
     <h2 class="font-brand text-heart text-5xl md:text-6xl lg:text-8xl px-4 drop-shadow-sm">{{ overlay }}</h2>
   </div>
-{{ /if }}
+  {{ /if }}
 
-<section class="scroller relative overflow-hidden"
-  style="--gap: {{ gap }}px; --duration: {{ speed }}s; --item-h: {{ height }}px; --direction: {{ direction == 'right' ? 'reverse' : 'normal' }};"
->
-  <!-- Fade edges (optional; requires mask support). Remove if you don't want it. -->
-  <div class="pointer-events-none absolute inset-0 scroller-mask"></div>
+  <section
+    x-data 
+    x-init="$nextTick(() => {
+      let inner = $el.querySelector('.scroller__inner');
+      inner.style.animation = 'none';
+      inner.offsetHeight; // trigger reflow
+      inner.style.animation = '';
+    })"
 
-  <div class="scroller__inner">
-    <!-- Track A (screen readers read this one) -->
-    <ul class="scroller__track">
-      {{ for s of items }}
-      <li class="scroller__item">
-        {{ if s.href }}<a href="{{ s.href }}" class="block focus:outline-none focus:ring">{{ /if }}
-          <img src="{{ s.image ?? s.src }}" alt="{{ s.alt ?? '' }}" loading="lazy" decoding="async"
-               class="grayscale-80 block h-[var(--item-h)] w-auto object-cover">
-        {{ if s.href }}</a>{{ /if }}
-      </li>
-      {{ /for }}
-    </ul>
+    class="scroller relative overflow-hidden"
+    style="
+      --gap: {{ gap }}px;
+      --duration: {{ speed }}s;
+      --item-h: {{ height }}px;
+      --direction: {{ cssDirection }};
+    "
+  >
+    <div class="pointer-events-none absolute inset-0 scroller-mask"></div>
 
-    <!-- Track B (duplicate for seamless loop, hidden to AT) -->
-    <ul class="scroller__track" aria-hidden="true">
-      {{ for s of items }}
-      <li class="scroller__item">
-        {{ if s.href }}<a href="{{ s.href }}" class="block">{{ /if }}
-          <img src="{{ s.image ?? s.src }}" alt="" loading="lazy" decoding="async"
-               class="grayscale-80 block h-[var(--item-h)] w-auto object-cover" />
-        {{ if s.href }}</a>{{ /if }}
-      </li>
-      {{ /for }}
-    </ul>
-  </div>
-</section>
+    <div class="scroller__inner">
+      <ul class="scroller__track">
+        {{ for s of list }}
+          {{ set imgSrc = "" }}
+          {{ if s && s.image }}{{ set imgSrc = s.image }}
+          {{ else if s && s.src }}{{ set imgSrc = s.src }}{{ /if }}
+          {{ set imgAlt = (s && s.alt ? s.alt : "") }}
+
+          {{ if imgSrc }}
+          <li class="scroller__item">
+            {{ if s && s.href }}<a href="{{ s.href }}" class="block focus:outline-none focus:ring">{{ /if }}
+              <img src="{{ imgSrc }}" transform-images="jpg 300" alt="{{ imgAlt }}" loading="lazy" decoding="async"
+                   class="grayscale-80 block h-[var(--item-h)] w-auto object-cover">
+            {{ if s && s.href }}</a>{{ /if }}
+          </li>
+          {{ /if }}
+        {{ /for }}
+      </ul>
+
+      <ul class="scroller__track" aria-hidden="true">
+        {{ for s of list }}
+          {{ set imgSrc2 = "" }}
+          {{ if s && s.image }}{{ set imgSrc2 = s.image }}
+          {{ else if s && s.src }}{{ set imgSrc2 = s.src }}{{ /if }}
+
+          {{ if imgSrc2 }}
+          <li class="scroller__item">
+            {{ if s && s.href }}<a href="{{ s.href }}" class="block">{{ /if }}
+              <img src="{{ imgSrc2 }}" transform-images="jpg 300" alt="" loading="lazy" decoding="async"
+                   class="grayscale-80 block h-[var(--item-h)] w-auto object-cover" />
+            {{ if s && s.href }}</a>{{ /if }}
+          </li>
+          {{ /if }}
+        {{ /for }}
+      </ul>
+    </div>
+  </section>
+
 {{ /if }}

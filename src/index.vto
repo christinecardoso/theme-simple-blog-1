@@ -26,14 +26,19 @@ templateEngine: [vto]
         {{ include "templates/testimonial-grid.vto" { testimonials: post.testimonials } }}
       {{ /if }}
       {{ if post.scroller }}
-        {{ include "templates/image-scroller.vto" {
-          items: post.scroller,
-          speed: Number(post.ticker?.speed ?? 30),
-          gap: Number(post.ticker?.gap ?? 24),
-          height: Number(post.ticker?.height ?? 260),
-          direction: post.ticker?.direction ?? "left",
-          overlay: post.ticker?.overlay ?? ""
-         } }}
+
+        {{ set scrollerItems = (post.scroller && Array.isArray(post.scroller) ? post.scroller : []) }}
+
+        {{ if scrollerItems && scrollerItems.length }}
+          {{ include "templates/image-scroller.vto" {
+            items: scrollerItems,
+            speed: post.ticker.speed,
+            gap: post.ticker.gap,
+            height: post.ticker.height,
+            direction: post.ticker.direction,
+            overlay: post.ticker.overlay
+          } }}
+        {{ /if }}
       {{ /if }}
     </div>
   </div>

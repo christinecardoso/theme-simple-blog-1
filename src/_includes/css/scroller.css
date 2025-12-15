@@ -11,9 +11,11 @@
     animation-direction: var(--direction, normal);
   }
 
-  .scroller:hover .scroller__inner,
-  .scroller:focus-within .scroller__inner {
-    animation-play-state: paused; /* pause on hover or when a link gets focus */
+  @media (hover: hover) {
+    .scroller:hover .scroller__inner,
+    .scroller:focus-within .scroller__inner {
+      animation-play-state: paused;
+    }
   }
 
   .scroller__track {
@@ -35,6 +37,8 @@
       #000 calc(100% - var(--fade)),
       transparent
     );
+      -webkit-mask: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+
   }
 
   /* The trick: because Track B == Track A, translating by -50% loops perfectly */
