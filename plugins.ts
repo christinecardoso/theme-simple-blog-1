@@ -1,5 +1,4 @@
 import date, { Options as DateOptions } from "lume/plugins/date.ts";
-import postcss from "lume/plugins/postcss.ts";
 import terser from "lume/plugins/terser.ts";
 import prism, { Options as PrismOptions } from "lume/plugins/prism.ts";
 import basePath from "lume/plugins/base_path.ts";
@@ -15,22 +14,22 @@ import toc from "https://deno.land/x/lume_markdown_plugins@v0.8.0/toc.ts";
 import image from "https://deno.land/x/lume_markdown_plugins@v0.8.0/image.ts";
 import footnotes from "https://deno.land/x/lume_markdown_plugins@v0.8.0/footnotes.ts";
 import { alert } from "npm:@mdit/plugin-alert@0.22.0";
-
 import picture from "lume/plugins/picture.ts";
 import transformImages from "lume/plugins/transform_images.ts";
 import wikilinks from "https://deno.land/x/lume_markdown_plugins/wikilinks.ts";
-import markdownItContainer from "npm:markdown-it-container";
-import mdItObsidianCallouts from "npm:markdown-it-obsidian-callouts";
-import obsidianImages from "npm:markdown-it-obsidian-images";
-import attrs from "npm:markdown-it-attrs";
+import markdownItContainer from "npm:markdown-it-container@4.0.0";
+import mdItObsidianCallouts from "npm:markdown-it-obsidian-callouts@0.3.2";
+import obsidianImages from "npm:markdown-it-obsidian-images@1.0.1";
+import attrs from "npm:markdown-it-attrs@4.3.1";
 import tailwindcss from "lume/plugins/tailwindcss.ts";
 import icons from "lume/plugins/icons.ts";
 import typography from "npm:@tailwindcss/typography";
 import simpleIcons from "https://deno.land/x/lume_icon_plugins@v0.1.1/simpleicons.ts";
-import markdownItAnchor from 'npm:markdown-it-anchor';
+import markdownItAnchor from 'npm:markdown-it-anchor@9.2.0';
 import svgo from "lume/plugins/svgo.ts";
 import inline from "lume/plugins/inline.ts";
 import googleFonts from "lume/plugins/google_fonts.ts";
+import markdownItTasks from 'npm:markdown-it-task-lists@2.1.1';
 
 import "lume/types.ts";
 
@@ -114,7 +113,6 @@ export default function (userOptions?: Options) {
           "Beth Ellen":"https://fonts.googleapis.com/css2?family=Beth+Ellen:wght@400"
         },
       }))
-      .use(postcss())
       .use(basePath())
       .use(toc())
       .use(prism(options.prism))
@@ -137,7 +135,7 @@ export default function (userOptions?: Options) {
         options: {
           // Specify output formats and sizes
           formats: ["webp", "avif", "jpg"],
-          sizes: [640, 1080],  // Define the sizes you want to generate
+          sizes: ['200x200', 640, 1080],  // Define the sizes you want to generate
         },
         functions: {
           resizeBlur(img, size) {
@@ -166,7 +164,7 @@ export default function (userOptions?: Options) {
     // Alert plugin
     site.hooks.addMarkdownItPlugin(alert);
     site.hooks.addMarkdownItPlugin(mdItObsidianCallouts);
-    site.hooks.addMarkdownItPlugin(obsidianImages);
+    site.hooks.addMarkdownItPlugin(obsidianImages, { relativeBaseURL: '/uploads/' });
     site.hooks.addMarkdownItPlugin(attrs); // for {.class} support
     for (const type of ["div", "tip", "warning", "info", "note"]) {
       site.hooks.addMarkdownItPlugin(markdownItContainer, type);
